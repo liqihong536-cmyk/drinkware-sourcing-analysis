@@ -135,3 +135,9 @@ Three-page Power BI report:
 2. Load the CSV into BigQuery as `trade.imports_raw` using the schema in `00_load_and_validate.sql`.
 3. Run the SQL files in order. `09_build_dashboard_table.sql` produces the table used by Power BI.
 4. Recreate the measures in `powerbi/dax_measures.md`.
+## Author
+
+**Qihong (Sicily) Li**
+M.S. candidate, Northeastern University · Supply chain, procurement and analytics
+
+[LinkedIn](https://www.linkedin.com/in/qihong-li-pm/)
