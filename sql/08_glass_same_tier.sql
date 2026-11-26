@@ -8,8 +8,10 @@
 --
 -- Bug fix : An earlier version filtered small countries with WHERE before
 --           computing SUM(v) OVER (). SQL runs WHERE before window
---           functions, so the denominator excluded small countries and
---           inflated every share (China showed 52.4% instead of ~47%).
+--           functions, so ~$14M from smaller countries (~10% of the tier)
+--           dropped out of the denominator and every share was inflated by
+--           ~11%: China 52.4% -> 47.1%, Mexico 33.4% -> 30.0%,
+--           Italy 4.8% -> 4.3%, Poland 2.9% -> 2.6%.
 --           Caught by cross-checking against the Power BI measure.
 --           Fix: compute shares in a CTE first, then filter.
 -- =====================================================================
