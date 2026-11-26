@@ -68,7 +68,7 @@ An end-to-end sourcing analysis of U.S. imports of insulated stainless-steel dri
 | Italy | $1.33 |
 | Mexico | $0.59 |
 
-- **Price isn't everything.** Mexico (duty-free under USMCA, freight under 2% of value) lands at well under half of China's cost, yet China still holds ~47% of the tier versus ~30% for Mexico, which points to differences in assortment and capacity that customs data cannot show.
+- **Price isn't everything.** Mexico (duty-free under USMCA, freight under 2% of value) lands at well under half of China's cost, yet China still holds 47.1% of the tier versus 30.0% for Mexico, which points to differences in assortment and capacity that customs data cannot show.
 
 ### Two sourcing stories
 
@@ -86,7 +86,7 @@ An end-to-end sourcing analysis of U.S. imports of insulated stainless-steel dri
 | `Total:` and blank rows in the export | Filtered out in SQL |
 | HTS-10 codes split mid-period (e.g., 7013.28.2000 → .2010 / .2090) | Analyzed by product group and 8-digit price tier instead of 10-digit codes |
 | Vietnam's reported freight was <0.1% of value in 2024 (vs ~4.5% for China) | Confirmed records exist every month (not missing), kept as reported and flagged; this understates Vietnam's landed cost, so premium estimates are conservative |
-| A share calculation used `WHERE` before a window function, shrinking the denominator (China showed 52.4% instead of ~47%) | Caught by cross-checking SQL against the Power BI measure; fixed by computing shares in a CTE before filtering |
+| A share calculation used `WHERE` before a window function, so ~$14M of imports from smaller countries (~10% of the tier) dropped out of the denominator. Every share was inflated by ~11%: China showed 52.4% instead of 47.1%, Mexico 33.4% instead of 30.0% | Caught by cross-checking SQL against the Power BI measure; fixed by computing shares in a CTE before filtering. `11_share_bug_check.sql` reproduces the buggy and corrected shares side by side |
 
 ## Dashboard
 
@@ -114,7 +114,8 @@ Three-page Power BI report:
 │   ├── 07_glass_by_country.sql        Glass sources, tariffs, freight
 │   ├── 08_glass_same_tier.sql         Same-tier landed-cost comparison
 │   ├── 09_build_dashboard_table.sql   Region and price-tier mapping
-│   └── 10_tier_check.sql              Validation of tier parsing
+│   ├── 10_tier_check.sql              Validation of tier parsing
+│   └── 11_share_bug_check.sql         Buggy vs. corrected share comparison
 ├── powerbi/
 │   └── dax_measures.md                All measures and calculated columns
 └── images/                            Dashboard screenshots
